@@ -68,6 +68,44 @@ public class ProdutosTest {
         Assertions.assertEquals("O valor do produto deve estar entre R$ 0,01 e R$ 7.000,00", mensagemApresentada);
     }
 
+    @Test
+    @DisplayName("Posso adicionar produtos de valor de R$ 0,01")
+    public void testPossoAdicionarProdutosComValorDeUmCentavo(){
+
+        String mensagemApresentada = new LoginPage(navegador)
+                .informarOUser("admin")
+                .informarASenha("admin")
+                .submeterFormularioDeLogin()
+                .acessarFormularioAdicaoNovoProduto()
+                .informarNomeDoProduto("MacBook PRO")
+                .informarValorDoProduto("001")
+                .informarCoresDoProduto("Rosa")
+                .submbeterFormularioDeAdicaoComSucesso()
+                .capturarMensagemApresentada();
+
+        // Vou validar que a mensagem de erro foi apresentada
+        Assertions.assertEquals("Produto adicionado com sucesso", mensagemApresentada);
+    }
+
+    @Test
+    @DisplayName("Posso adicionar produtos que estejam na faixa de R$ 0,01 a R$ 7.000,00")
+    public void testPossoAdicionarProdutosComValorDeUmCentavoASeteMilReais(){
+
+        String mensagemApresentada = new LoginPage(navegador)
+                .informarOUser("admin")
+                .informarASenha("admin")
+                .submeterFormularioDeLogin()
+                .acessarFormularioAdicaoNovoProduto()
+                .informarNomeDoProduto("MacBook PRO")
+                .informarValorDoProduto("600000")
+                .informarCoresDoProduto("preto")
+                .submbeterFormularioDeAdicaoComSucesso()
+                .capturarMensagemApresentada();
+
+        // Vou validar que a mensagem de erro foi apresentada
+        Assertions.assertEquals("Produto adicionado com sucesso", mensagemApresentada);
+    }
+
     @AfterEach
     public void afterEach(){
         navegador.quit();

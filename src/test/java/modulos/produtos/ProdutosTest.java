@@ -33,7 +33,7 @@ public class ProdutosTest {
     @Test
     @DisplayName("Não é permitido registrar um produto com valor igual a zero")
     public void testNaoEhPermitidoRegistrarProdutoComValorIgualAZero(){
-        
+
         String mensagemApresentada = new LoginPage(navegador)
                 .informarOUser("admin")
                 .informarASenha("admin")
@@ -41,6 +41,25 @@ public class ProdutosTest {
                 .acessarFormularioAdicaoNovoProduto()
                 .informarNomeDoProduto("MacBook PRO")
                 .informarValorDoProduto("000")
+                .informarCoresDoProduto("preto,branco")
+                .submbeterFormularioDeAdicaoComErro()
+                .capturarMensagemApresentada();
+
+        // Vou validar que a mensagem de erro foi apresentada
+        Assertions.assertEquals("O valor do produto deve estar entre R$ 0,01 e R$ 7.000,00", mensagemApresentada);
+    }
+
+    @Test
+    @DisplayName("Não é permitido registrar um produto com valor maior que R$ 7.000,00")
+    public void testNaoEhPermitidoRegistrarProdutoComValorAcimaDeSeteMil(){
+
+        String mensagemApresentada = new LoginPage(navegador)
+                .informarOUser("admin")
+                .informarASenha("admin")
+                .submeterFormularioDeLogin()
+                .acessarFormularioAdicaoNovoProduto()
+                .informarNomeDoProduto("MacBook PRO")
+                .informarValorDoProduto("700001")
                 .informarCoresDoProduto("preto,branco")
                 .submbeterFormularioDeAdicaoComErro()
                 .capturarMensagemApresentada();
